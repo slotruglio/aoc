@@ -19,8 +19,9 @@ for i in range(0, len(options)):
     print(toPrint)
 
 choice = int(input("What py do you want to execute? "))
-program = options[choice].split('/')[2]
-folder = options[choice].split('/')[1]
+program = options[choice]
+year = program.split("/")[1]
+program_name = program.split("/")[2]
 
 timex = datetime.now()
 print("Execution of:", program)
@@ -29,16 +30,14 @@ times = []
 for i in range(0, 10):
     start = time.time()
 
-    os.chdir(folder)
     tmp = subprocess.check_output(["python", program]).decode("utf-8")
     text += tmp
-    os.chdir("..")
     stop = time.time() - start
     times.append(stop)
     print(tmp)
     print("Time of execution[{}]: {}".format(i, stop))
 
-f = open("bench/{}{}.txt".format(program, timex), "a")
+f = open("./{}/bench/{}.txt".format(year, timex), "a")
 f.write(text)
 f.write("Average time of execution:{}".format(sum(times)/len(times)))
 f.close()
