@@ -10,13 +10,13 @@ SHAPE_SCORE = {
 }
 
 OUTCOME_SCORE = {
-    "LOST": 0,
+    "LOSS": 0,
     "DRAW": 3,
     "WIN":  6
 }
 
 DESIRED_OUTCOME = {
-    "X": "LOST",
+    "X": "LOSS",
     "Y": "DRAW",
     "Z": "WIN"
 }
@@ -28,13 +28,13 @@ def outcome_with_array(opponent, shape):
     if shape == BEATERS[opponent-1]:
         return OUTCOME_SCORE["WIN"]
     else:
-        return OUTCOME_SCORE["LOST"]
+        return OUTCOME_SCORE["LOSS"]
 
 # calculate shape score for the desired outcome
 def outcome_score_for_shape(desired, op_score):
     if desired == "DRAW":
         return op_score
-    if desired == "LOST":
+    if desired == "LOSS":
         return BEATERS.index(op_score)+1
     else:
         return BEATERS[op_score-1]
@@ -54,7 +54,7 @@ def day_2_full(input):
             score_2 += outcome_score_for_shape(desired, op_score)
             score_2 += OUTCOME_SCORE[desired]
 
-    (score_1, score_2)
+    return (score_1, score_2)
 
 def main():
     input = "2022/inputs/day2/input.txt"
