@@ -1,41 +1,42 @@
-use std::{path::Path, fs::File, io::BufRead, collections::HashMap};
+use std::{path::Path, fs::File, io::BufRead};
 
 fn get_shape_score(shape: &str) -> u32 {
-    match shape {
+    match shape.trim() {
         "A" | "X" => 1,
         "B" | "Y" => 2,
-        _ => 3,
+        _         => 3,
     }
 }
 
 fn get_outcome_score(outcome: &str) -> u32 {
-    match outcome {
+    match outcome.trim() {
         "W" => 6,
         "D" => 3,
-        _ => 0,
+         _  => 0,
     }
 }
 
 fn get_outcome_from_str(outcome: &str) -> &str {
-    match outcome {
-        "X" => "W",
+    match outcome.trim() {
+        "X" => "L",
         "Y" => "D",
-        _ => "L",
+         _  => "W",
     }
 }
 
 fn get_shape_from_out(outcome: &str, opp: &u32) -> u32 {
-    match outcome {
+    let beaters: [u32; 3] = [2,3,1];
+    match outcome.trim() {
         "D" => opp.clone(),
-        "W" => {if opp < &3 {opp + 1} else {1}},
-        _ => {if opp > &1 {opp - 1} else {3}},
+        "W" => beaters[(opp-1) as usize],
+        _ => beaters.iter().position(|x| x == opp).unwrap() as u32 + 1,
     }
 }
 
 fn calculate_score(opp: &u32, me: &u32) -> u32 {
     let beaters: [u32; 3] = [2,3,1];
     if opp == me { 3 } // draw
-    else if beaters[(opp-1) as usize] == *me { 6 } // win
+    else if me == beaters.get((opp-1) as usize).unwrap() { 6 } // win
     else { 0 } // loss
 }
 
@@ -73,7 +74,7 @@ pub fn day_two<P: AsRef<Path>>(path: P) -> (u32, u32) {
     let mut score_2 = 0 as u32;
 
     for res in reader.lines() {
-        let Ok(line) = res else { break; };
+        let Ok(line) = res else { continue; };
         let (opponent, shape) = line.split_at(1);
 
         let opp = get_shape_score(opponent);
@@ -82,7 +83,8 @@ pub fn day_two<P: AsRef<Path>>(path: P) -> (u32, u32) {
         score_1 += my + calculate_score(&opp, &my);
 
         let desired = get_outcome_from_str(shape);
-        score_2 += get_outcome_score(desired) + calculate_score(&opp, &get_shape_from_out(desired, &opp));
+        score_2 += get_shape_from_out(desired, &opp);
+        score_2 += calculate_score(&opp, &get_shape_from_out(desired, &opp));
     }
 
     (score_1, score_2)
