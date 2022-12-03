@@ -1,39 +1,34 @@
-memory = []
+calc = dict()
+results = dict()
 
-def findInMemory(register):
-    for mem in memory:
-        if mem[0].count(register) > 0:
-            return mem[1]
-    return -1
+with open("input.txt") as f:
+    for command in f.readlines():
+        (ops, res) = command.split('->')
+        calc[res.strip()] = ops.strip().split(' ')
 
-def insert(tuplex):
-    if memory.count(tuplex[0]) > 0:
-        memory[memory.index(tuplex[0])][1] = tuplex[1]
-    else:
-        memory.append(tuplex)
+def calculate(name):
+    try:
+        return int(name)
+    except ValueError:
+        pass
 
-with open("input.txt", "r") as f:
-    lines = f.readlines()
-    for line in lines: 
-        operation, destination = line.split("->")
-        destination = destination.strip()
-        operators = operation.strip().split()
-        if len(operators) == 1:
-            try:
-                insert([destination, int(operators[0])])
-            except:
-                insert([destination, findInMemory(operators[0])])
-        elif len(operators) == 2:
-            insert([destination, ~findInMemory(operators[1])&65535])
+    if name not in results:
+        ops = calc[name]
+        if len(ops) == 1:
+            res = calculate(ops[0])
         else:
-            if operators[1] == "AND":
-                insert([destination, findInMemory(operators[0])&findInMemory(operators[-1])])
-            elif operators[1] == "OR":
-                insert([destination, findInMemory(operators[0])|findInMemory(operators[-1])])
-            elif operators[1] == "LSHIFT":
-                insert([destination, findInMemory(operators[0])<<int(operators[-1])])
-            else: insert([destination, findInMemory(operators[0])>>int(operators[-1])])
+            op = ops[-2]
+            if op == 'AND':
+              res = calculate(ops[0]) & calculate(ops[2])
+            elif op == 'OR':
+              res = calculate(ops[0]) | calculate(ops[2])
+            elif op == 'NOT':
+              res = ~calculate(ops[1]) & 0xffff
+            elif op == 'RSHIFT':
+              res = calculate(ops[0]) >> calculate(ops[2])
+            elif op == 'LSHIFT':
+              res = calculate(ops[0]) << calculate(ops[2])
+        results[name] = res
+    return results[name]
 
-memory.sort()
-print(memory)
-print("#Day7 - Part1:", findInMemory('a'))
+print("a: %d" % calculate('a'))
