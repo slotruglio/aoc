@@ -18,3 +18,10 @@ Every match consists of two chars, one for each player. We have to sum the score
 
 ### Part Two
 Every match consists of two chars, the first is the opponet shape and the second is the "desired outcome", so we have to sum the score for the desired outcome and the score for the shape that "matches" the desired outcome.
+
+## Day 3
+### Part One
+Each char of a line of the input represents an item inside a rucksack. We have to find the char (and its corresponding value) common in the two compartments of the rucksack. (The compartments are the two halves of the input line.)
+In the end, we have to sum the values of the chars common in the two compartments.
+### Part Two
+Like in the first part, but in this case we have to find the common char in a group of three lines.
