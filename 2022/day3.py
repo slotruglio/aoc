@@ -3,7 +3,7 @@ def day_3(input):
     sum_2 = 0
     with open(input, 'r') as file:
         group = []
-        for (i, line) in enumerate(file.readlines()):
+        for line in file.readlines():
             # part one calculus
             first, second = line[:len(line)//2], line[len(line)//2:]
             for char in first:
