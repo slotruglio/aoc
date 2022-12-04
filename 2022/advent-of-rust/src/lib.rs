@@ -1,4 +1,4 @@
-use std::{path::Path, fs::File, io::BufRead};
+use std::{path::Path, fs::File, io::BufRead, collections::HashSet};
 
 pub fn day_one<P: AsRef<Path>>(path: P) -> (u32, u32) {
     let file = File::open(path).unwrap();
@@ -113,3 +113,39 @@ pub fn day_three<P: AsRef<Path>>(path: P) -> (u16, u16) {
     }
     (sum_1,sum_2)
 }
+
+pub fn day_four<P: AsRef<Path>>(path: P) -> (u16, u16) {
+    let file = File::open(path).unwrap();
+    let reader = std::io::BufReader::new(file);
+
+    let mut count_1 = 0;
+    let mut count_2 = 0;
+
+    for res in reader.lines() {
+        let Ok(line) = res else { continue; };
+        let vec = line.split(',').into_iter().map(|x| {
+            let range = x.split_at(x.find('-').unwrap());
+            let mut set = HashSet::new();
+            for i in range.0.parse::<u16>().unwrap()..=range.1[1..].parse::<u16>().unwrap() {
+                set.insert(i);
+            }
+            set
+        }).collect::<Vec<HashSet<u16>>>();
+
+        let len_union = vec[0].union(&vec[1])
+        .collect::<HashSet<&u16>>().len();
+        let len_inter = vec[0].intersection(&vec[1])
+        .collect::<HashSet<&u16>>().len();
+
+        if len_union == vec[0].len() ||
+           len_union == vec[1].len() {
+            count_1 += 1;
+        }
+
+        if len_inter > 0 { count_2 += 1; }
+
+    }
+
+    (count_1, count_2)
+}
+
