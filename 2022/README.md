@@ -25,3 +25,9 @@ Each char of a line of the input represents an item inside a rucksack. We have t
 In the end, we have to sum the values of the chars common in the two compartments.
 ### Part Two
 Like in the first part, but in this case we have to find the common char in a group of three lines.
+
+## Day 4
+### Part One
+Each line of the input is two couple of numbers that represent a range of numbers. We have to count how many full overlapsing ranges there are. It can be simply solved by doing the union of the two ranges as set and verify if the length of the union is equal to one or the other range.
+### Part Two
+This time we have to find ALL overlapsing number. We can do it by doing the intersection of the two ranges as set and verify if the length of the intersection is greater than 0.
