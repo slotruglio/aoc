@@ -10,17 +10,17 @@ def day_five(input):
                 for _ in range(n):
                     stacks[stack_to-1].append(stacks[stack_from-1].pop())
             elif "[" in line:
-                # if line is [A] [B] [C]
+                # if line is [A] [B] [C] append item to lists
                 level = []
                 for i in range(1, len(line), 4):
                     level.append(line[i])
                 lists.append(level)
             elif "1" in line:
-                # if line is 1 2 3 4...
+                # if line is 1 2 3 create a [] for each of the stack
                 for i in range(1, len(line), 4):
                     stacks.append([])
             else:
-                # if line is \n create the stacks
+                # if line is \n add items to stacks
                 for i in range(len(lists)):
                     for j in range(len(lists[i])):
                         letter = lists[i][j].strip()

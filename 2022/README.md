@@ -31,3 +31,7 @@ Like in the first part, but in this case we have to find the common char in a gr
 Each line of the input is two couple of numbers that represent a range of numbers. We have to count how many full overlapsing ranges there are. It can be simply solved by doing the union of the two ranges as set and verify if the length of the union is equal to one or the other range.
 ### Part Two
 This time we have to find ALL overlapsing number. We can do it by doing the intersection of the two ranges as set and verify if the length of the intersection is greater than 0.
+
+## Day 5
+### Part One
+The first input gives items in line, but they correct order is the column. After correctly create a list for each column and put data inside, we need to do the move that are easy to do without using "strange" functions thanks to using list for stacks, where the first item in stack is the last of the list. Acting like that we can get the first item of stack just with pop() and add in the top of the stack just with append().
