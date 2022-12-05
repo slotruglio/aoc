@@ -35,3 +35,5 @@ This time we have to find ALL overlapsing number. We can do it by doing the inte
 ## Day 5
 ### Part One
 The first input gives items in line, but they correct order is the column. After correctly create a list for each column and put data inside, we need to do the move that are easy to do without using "strange" functions thanks to using list for stacks, where the first item in stack is the last of the list. Acting like that we can get the first item of stack just with pop() and add in the top of the stack just with append().
+### Part Two
+For this part we have to do the same thing, but instead of insert directly the item returned by pop() of the stack, we have to take last n items in the order they are in the (from) stack and insert them in the (to) stack in the same order.
