@@ -21,15 +21,10 @@ def day_1_full(path):
     calories = sorted(calories, reverse=True)[:3]
     return (calories[0], sum(calories))
 
-def main():
+if __name__ == '__main__':
     input = "./2022/inputs/day1/day1.txt"
-    
     (one, two) = day_1_full(input)
     print("Part 1: "+ str(one))
     print("Part 2: "+str(two))
-
-if __name__ == '__main__':
-    main()
-    exit(0)
 
             

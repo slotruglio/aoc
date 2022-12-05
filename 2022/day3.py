@@ -23,11 +23,8 @@ def day_3(input):
 
     return (sum_1, sum_2)
 
-def main():
+if __name__ == '__main__':
     input = "2022/inputs/day3/input.txt"
     one, two = day_3(input)
-    print(f"Part One: {one}")
-    print(f"Part Two: {two}")
-
-if __name__ == '__main__':
-    main()
+    print(f"Part 1: {one}")
+    print(f"Part 2: {two}")

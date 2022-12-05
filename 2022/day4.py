@@ -18,4 +18,7 @@ def day_4(input):
 
 
 if __name__ == '__main__':
-    print(day_4("2022/inputs/day4/input.txt"))
+    input = "2022/inputs/day4/input.txt"
+    one, two = day_4(input)
+    print(f"Part 1: {one}")
+    print(f"Part 2: {two}")

@@ -56,12 +56,9 @@ def day_2_full(input):
 
     return (score_1, score_2)
 
-def main():
-    input = "2022/inputs/day2/input.txt"
-    one,two = day_2_full(input)
-    print("Part One: "+str(one))
-    print("Part Two: "+str(two))
 
 if __name__ == '__main__':
-    main()
-    exit(0)
+    input = "2022/inputs/day2/input.txt"
+    one,two = day_2_full(input)
+    print("Part 1: "+str(one))
+    print("Part 2: "+str(two))
