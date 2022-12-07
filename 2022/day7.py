@@ -27,10 +27,9 @@ def day_seven(input):
             else:
                 pass
 
-    one = 0
-    disk = 70_000_000 # disk size
-    to_free = 30_000_000 # update size
-    two = None
+    one, two = 0, None
+    disk, to_free = 70_000_000, 30_000_000 # disk size, update size
+
     for node in nodes:
         # part 1
         if node.size <= 100_000:
