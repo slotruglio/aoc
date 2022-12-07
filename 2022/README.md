@@ -43,3 +43,10 @@ For this part we have to do the same thing, but instead of insert directly the i
 We have to find first 4-chars word without repeating chars. To do that we can simply take a slice of len 4 and verify if the len of the set is equal to the len of the slice.
 ### Part Two
 Like Part One, but this time the number of chars is 14.
+
+## Day 7
+The input is a list of strings that represent terminal commands. In this exercise can be useful to use [anytree library](https://pypi.org/project/anytree/), because it can help us to find the relationship between current directory, the command and files
+### Part One
+We have to find the sum of directories' size less than a given size. Directories' size can be calculated by summing the size of all files inside it.
+### Part Two
+We know the size of the disk and the size of the update. We have to find the smallest dir to delete in order to install the update.
