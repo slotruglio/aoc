@@ -55,8 +55,6 @@ We know the size of the disk and the size of the update. We have to find the sma
 The input is a matrix of trees' height (int).
 ### Part One
 We have to find the number of trees that are visible (tree has the max height) from at least one side (left, right, top, bottom).
-To do that we can iterate for each tree and check if it's visible from at least one side.
+To do that we can iterate for each tree and check if it's visible from at least one side. It can be calculated also by doing part two and verify that the last iteration is equal to the number of trees for that side.
 ### Part Two
 We have to find the highest scenic score (production of the number of trees visible from all sides) of a tree. To do that we have to find the local scenic score by iterating for each tree and count the number of trees visible from all sides. If the local scenic score is greater than the current max, update the max.
-#### Notes
-This time I didn't try to calculate both the solution in the same time due to lack of time, but I think that it's possible to do it. It's possible to calculate the part 1' solution by the second one' procedure by checking if the number of trees visible from all sides is equal to total number of trees for that side.

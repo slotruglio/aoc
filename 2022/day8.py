@@ -9,52 +9,41 @@ def day_eight(input):
     visibles = 2*(len(matrix)-1) + 2*(len(matrix[0])-1) # Part 1
     scenic_score = 0 # Part 2
     for i in range(1, len(matrix) -1):
-        # PART 1
         for j in range(1, len(matrix[i]) - 1):
-            # row left
-            if matrix[i][j] > max(matrix[i][:j]):
-                visibles += 1
-                continue
-            # row right
-            if matrix[i][j] > max(matrix[i][j+1:]):
-                visibles += 1
-                continue
-            # col up
-            if matrix[i][j] > max(e[j] for e in matrix[:i]):
-                visibles += 1
-                continue
-            # col down
-            if matrix[i][j] > max(e[j] for e in matrix[i+1:]):
-                visibles += 1
-                continue
-            
-        # PART 2
-        for j in range(1, len(matrix[i]) - 1):
-            left = 0
+            left, right, up, down = 0, 0, 0, 0
+            visible = [False, False, False, False]
             # row left
             for k in range(j-1, -1, -1):
                 left += 1
                 if matrix[i][k] >= matrix[i][j]:
                     break
+                if k == 0:
+                    visible[0] = True
+
             # row right
-            right = 0
             for k in range(j+1, len(matrix[i])):
                 right += 1
                 if matrix[i][k] >= matrix[i][j]:
                     break
+                if k == len(matrix[i]) - 1:
+                    visible[1] = True
             # col up
-            up = 0
             for k in range(i-1, -1, -1):
                 up += 1
                 if matrix[k][j] >= matrix[i][j]:
                     break
+                if k == 0:
+                    visible[2] = True
             # col down
-            down = 0
             for k in range(i+1, len(matrix)):
                 down += 1
                 if matrix[k][j] >= matrix[i][j]:
                     break
+                if k == len(matrix) - 1:
+                    visible[3] = True
             scenic_score = max(scenic_score, left*right*up*down)
+            if any(visible):
+                visibles += 1
 
     return (visibles,scenic_score)
 
