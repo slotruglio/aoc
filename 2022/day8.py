@@ -6,9 +6,10 @@ def day_eight(input):
         for line in f.readlines():
             matrix.append([ int(x) for x in line.strip() ])
 
-    visibles = 2*(len(matrix)-1) + 2*(len(matrix[0])-1)
-    scenic_score = 0
+    visibles = 2*(len(matrix)-1) + 2*(len(matrix[0])-1) # Part 1
+    scenic_score = 0 # Part 2
     for i in range(1, len(matrix) -1):
+        # PART 1
         for j in range(1, len(matrix[i]) - 1):
             # row left
             if matrix[i][j] > max(matrix[i][:j]):
@@ -27,7 +28,7 @@ def day_eight(input):
                 visibles += 1
                 continue
             
-        # count number of visible cells
+        # PART 2
         for j in range(1, len(matrix[i]) - 1):
             left = 0
             # row left
