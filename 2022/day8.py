@@ -1,5 +1,3 @@
-import numpy as np
-
 def day_eight(input):
     matrix = []
     with open(input) as f:
