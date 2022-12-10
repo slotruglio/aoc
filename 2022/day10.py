@@ -1,5 +1,7 @@
 def day_ten(input):
     signals = { 20: 0, 60: 0, 100: 0, 140:0, 180:0, 220: 0}
+    monitor = [['.']*40, ['.']*40, ['.']*40, ['.']*40, ['.']*40, ['.']*40]
+
     with open(input) as f:
         cycles = 0
         X = 1
@@ -7,16 +9,21 @@ def day_ten(input):
             cycles += 1
             if cycles in signals.keys():
                 signals[cycles] = cycles*X
+            if (cycles-1)%40 in range(X-1, X+2):
+                monitor[(cycles-1)//40][(cycles-1)%40] = '#'
             line = line.strip()
             if line == "noop":
                 continue
             op, val = line.split(" ")
             cycles += 1
+            if (cycles-1)%40 in range(X-1, X+2):
+                monitor[(cycles-1)//40][(cycles-1)%40] = '#'
+
             if cycles in signals.keys():
                 signals[cycles] = cycles*X
             X += int(val)
-    
-    return (sum(signals.values()),0)
+
+    return (sum(signals.values()), ["".join(line) for line in monitor])
 
 if __name__ == '__main__':
     one,two = day_ten("2022/inputs/day10/input.txt")
