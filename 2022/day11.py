@@ -64,7 +64,7 @@ def day_eleven(input):
             if "Monkey" in line:
                 monkey = Monkey(len(monkeys))
             elif "items" in line:
-                monkey.items = np.array([int(x) for x in line.split(":")[1].split(",")], dtype=np.uint64)
+                monkey.items = np.array([int(x) for x in line.split(":")[1].split(",")])
             elif "Operation" in line:
                 monkey.operation = Monkey.parse_op(line.split(":")[-1].strip())
             elif "Test" in line:
