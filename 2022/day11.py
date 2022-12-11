@@ -1,14 +1,14 @@
 import math
 
 class Monkey:
-    inspected = 0
-    def __init__(self, name, items, operation, test, true_m, false_m):
-        self.name = "Monkey "+str(name)
-        self.items = items
-        self.operation = Monkey.parse_op(operation)
-        self.test = Monkey.parse_test(test)
-        self.true_m = true_m
-        self.false_m = false_m
+    def __init__(self, num):
+        self.inspected = 0
+        self.name = "Monkey "+str(num)
+        self.items = []
+        self.operation = None
+        self.test_fn = None
+        self.true_m = None
+        self.false_m = None
     
     def parse_op(operation):
         _, op = operation.split("=")
@@ -26,61 +26,45 @@ class Monkey:
         self.items.append(item)
 
     def inspect(self):
-        if len(self.items) == 0:
-            return
         self.items[0] = self.operation(self.items[0])
         self.items[0] = math.floor(self.items[0] / 3)
         self.inspected += 1
 
-    def test_fn(self, monkeys):
-        if len(self.items) == 0:
-            return
+    def test(self, monkeys):
         item = self.items.pop(0)
-        if self.test(item):
-            monkeys[self.true_m].add(item)
-            return
-        monkeys[self.false_m].add(item)
+        index = self.true_m if self.test_fn(item) else self.false_m
+        monkeys[index].add(item)
+    
+    def do_routine(self, monkeys):
+        count = len(self.items)
+        for _ in range(count):
+            self.inspect()
+            self.test(monkeys)
 
 def day_eleven(input):
     monkeys = []
     with open(input, 'r') as f:
-        counter = 0
-        curr_items = []
-        operation = None
-        test = None
-        true_m = None
-        false_m = None
+        monkey = None
         for line in f.readlines():
             if "Monkey" in line:
-                curr_items = []
-                counter += 1
-                operation = None
-                test = None
-                true_m = None
-                false_m = None
-            if "items" in line:
-                curr_items = [int(x) for x in line.split(":")[1].split(",")]
+                monkey = Monkey(len(monkeys))
+            elif "items" in line:
+                monkey.items = [int(x) for x in line.split(":")[1].split(",")]
             elif "Operation" in line:
-                operation = line.split(":")[-1].strip()
+                monkey.operation = Monkey.parse_op(line.split(":")[-1].strip())
             elif "Test" in line:
-                test = line.split(":")[-1].strip()
+                monkey.test_fn = Monkey.parse_test(line.split(":")[-1].strip())
             elif "true" in line:
-                num = line.split(" ")[-1]
-                true_m = int(num)
+                monkey.true_m = int(line.split(" ")[-1])
             elif "false" in line:
-                num = line.split(" ")[-1]
-                false_m = int(num)
-                monkey = Monkey(counter, curr_items, operation, test, true_m, false_m)
+                monkey.false_m = int(line.split(" ")[-1])
                 monkeys.append(monkey)
     
     # run the monkeys
     top_2 = [0,0]
     for i in range(20):
         for monkey in monkeys:
-            item_count = len(monkey.items)
-            for j in range(item_count):
-                monkey.inspect()
-                monkey.test_fn(monkeys)
+            monkey.do_routine(monkeys)
 
         if i == 19:
             top_2 = sorted([m.inspected for m in monkeys], reverse=True)[:2]
