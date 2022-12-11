@@ -23,7 +23,10 @@ def day_ten(input):
                 signals[cycles] = cycles*X
             X += int(val)
 
-    return (sum(signals.values()), ["".join(line) for line in monitor])
+    # parse monitor into a string where each row is a line followed by \n
+    monitor = "\n".join(["".join(row) for row in monitor])
+
+    return (sum(signals.values()), "\n"+monitor)
 
 if __name__ == '__main__':
     one,two = day_ten("2022/inputs/day10/input.txt")
