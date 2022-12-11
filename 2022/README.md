@@ -58,3 +58,26 @@ We have to find the number of trees that are visible (tree has the max height) f
 To do that we can iterate for each tree and check if it's visible from at least one side. It can be calculated also by doing part two and verify that the last iteration is equal to the number of trees for that side.
 ### Part Two
 We have to find the highest scenic score (production of the number of trees visible from all sides) of a tree. To do that we have to find the local scenic score by iterating for each tree and count the number of trees visible from all sides. If the local scenic score is greater than the current max, update the max.
+
+## Day 9
+It looks like snake! The input is a sequence of directions (left, right, up, down) and number of steps (int).
+### Part One
+In this part we have to discover how many new squares are visited by the tail of the rope. The tail follows the same path of the head, but it's one step behind and doesn't visit the same squares, but what it does is to visit the squares in order to get closer to the head.
+It can be solved by iterating for each direction and for each step, and try to adding the new square to a set. If the square is already in the set, it means that it's already visited by the tail, so we can skip it. If it's not in the set, it means that it's a new square, so we can add it to the set.
+### Part Two
+The tail is longer, now there are 9 knots and we have to find the same as before but for the last knot.
+
+## Day 10
+Input is a list of assembly instructions. (noop and addx)
+### Part One
+The goal is to obtain the sum of the product between the cycles and the value of X at the cycle. To do that just iterate for each instruction and save the value of X*cycle at the cycle, then sum all the values.
+### Part Two
+Here there is a graphical representation of the execution. X represents the movement of a sprite in an horizontal axis. The "monitor" writes a # every time the sprite is over a pixel represented by the cycles.
+At the end all the # will be printed in the monitor and they will produce a message. The message is the solution.
+
+## Day 11
+The input is a list of monkeys with items and operations to do on them.
+### Part One
+We have to calculate stress-level for each of the rounds (20) and move the items between monkeys. In this case is really useful to use "eval" function to parse the operation that each monkey do to the items. At the end we have to multiply the top-2 monkeys' item-touch counts.
+### Part Two
+In the previous part there was always a division by 3 that reduce the stress-level. In this part there is not, so numbers grow really fast. To solve this problem we can consider the lcm of the stress-levels of the monkeys and divide the stress-level by that number. In this way we can get the same result, without risk of overflow.
