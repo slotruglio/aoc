@@ -25,9 +25,10 @@ class Monkey:
     def add(self, item):
         self.items.append(item)
 
-    def inspect(self):
+    def inspect(self, division):
         self.items[0] = self.operation(self.items[0])
-        self.items[0] = math.floor(self.items[0] / 3)
+        if division:
+            self.items[0] = math.floor(self.items[0] / 3)
         self.inspected += 1
 
     def test(self, monkeys):
@@ -35,10 +36,10 @@ class Monkey:
         index = self.true_m if self.test_fn(item) else self.false_m
         monkeys[index].add(item)
     
-    def do_routine(self, monkeys):
+    def do_routine(self, division, monkeys):
         count = len(self.items)
         for _ in range(count):
-            self.inspect()
+            self.inspect(division)
             self.test(monkeys)
 
 def day_eleven(input):
@@ -64,7 +65,7 @@ def day_eleven(input):
     top_2 = [0,0]
     for i in range(20):
         for monkey in monkeys:
-            monkey.do_routine(monkeys)
+            monkey.do_routine(division=True, monkeys=monkeys)
 
         if i == 19:
             top_2 = sorted([m.inspected for m in monkeys], reverse=True)[:2]
