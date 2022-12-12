@@ -81,3 +81,13 @@ The input is a list of monkeys with items and operations to do on them.
 We have to calculate stress-level for each of the rounds (20) and move the items between monkeys. In this case is really useful to use "eval" function to parse the operation that each monkey do to the items. At the end we have to multiply the top-2 monkeys' item-touch counts.
 ### Part Two
 In the previous part there was always a division by 3 that reduce the stress-level. In this part there is not, so numbers grow really fast. To solve this problem we can consider the lcm of the stress-levels of the monkeys and divide the stress-level by that number. In this way we can get the same result, without risk of overflow.
+
+## Day 12
+The input is a square matrix of chars.
+Each char represents a height level and two of the chars represent the starting and ending point of the path. We can do a step only if the difference between the height of the current square and the next square is less than 2. (e.g. we can go from a to b, but not from a to c)
+### Part One
+We need to find the length of the shortest path between the starting and ending point. To do that we can use a BFS algorithm.
+### Part Two
+Like before but we have to find the shortest path among all points with height = a. (a is the height of the starting point)
+
+To do that just do like part one for all points with height = a and return the shortest path.
