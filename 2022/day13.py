@@ -1,38 +1,4 @@
-from ast import literal_eval
-
-def compare_array(first, sec, level=0):
-    second = [sec] if isinstance(sec, int) else sec
-    level_str = "-"*level
-    print(f"{level_str}- Compare: {first} vs {second}")
-    if level == 0 and len(first) > len(second):
-        return False
-    for i in range(len(first)):
-        if not isinstance(first[i], int):
-            try:
-                if not compare_array(first[i], second[i], level+1):
-                    return False
-            except IndexError:
-                return False
-        elif isinstance(first[i], int) and not isinstance(second[i], int):
-            this_left = [first[i]]
-            try:
-                if not compare_array(this_left, second[i], level+1):
-                    return False
-            except IndexError:
-                return False
-        else:
-            #print(f"Compare: {first[i]} vs {sec[0]}")
-            try:
-                print(f"-{level_str}- Compare: {first[i]} vs {second[i]}")
-                if first[i] > second[i]:
-                    return False
-                if first[i] < second[i]:
-                    return True
-            except IndexError:
-                continue
-            except:
-                return False
-    return True
+from functools import cmp_to_key
 
 def compare(l,r):
   if type(l) == int and type(r) == int:
@@ -49,6 +15,7 @@ def compare(l,r):
     return compare(l,[r])
 
 def day_13(input):
+    signals = []
     correct_order_sum = 0
     with open(input, "r") as f:
         to_match = None
@@ -58,19 +25,23 @@ def day_13(input):
                 continue
             line = line.strip()
             if to_match is None:
-                to_match = (literal_eval(line), pair_counter)
+                to_match = (eval(line), pair_counter)
                 pair_counter += 1
                 continue
 
             # if to_match is not None:
             first, pair_index = to_match
-            second = literal_eval(line)
+            second = eval(line)
 
-            if compare(first,second)<=0: correct_order_sum += pair_index
+            if compare(first,second)<=0:
+                correct_order_sum += pair_index
+            signals.extend([first, second])
             to_match = None
 
-
-    return (correct_order_sum,0)
+    d1, d2 = [[2]], [[6]]
+    signals.extend([d1, d2])
+    signals.sort(key=cmp_to_key(compare))
+    return (correct_order_sum, (signals.index(d1)+1)*(signals.index(d2)+1))
 
 if __name__ == '__main__':
     one,two = day_13("2022/inputs/day13/input.txt")
