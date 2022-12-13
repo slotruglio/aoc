@@ -15,32 +15,18 @@ def compare(l,r):
     return compare(l,[r])
 
 def day_13(input):
-    signals = []
-    correct_order_sum = 0
+    correct_order_sum = 0   # part 1
+    d1, d2 = [[2]], [[6]]   # part 2
+    signals = [d1, d2]      # part 2
     with open(input, "r") as f:
-        to_match = None
-        pair_counter = 1
-        for line in f.readlines():
-            if line == "\n":
-                continue
-            line = line.strip()
-            if to_match is None:
-                to_match = (eval(line), pair_counter)
-                pair_counter += 1
-                continue
+        for i,s in enumerate(f.read().split("\n\n")):
+            left, right = [eval(x) for x in s.split()]
 
-            # if to_match is not None:
-            first, pair_index = to_match
-            second = eval(line)
+            if compare(left,right)<=0: correct_order_sum += i+1 # part 1
+            signals.extend([left, right])                       # part 2
 
-            if compare(first,second)<=0:
-                correct_order_sum += pair_index
-            signals.extend([first, second])
-            to_match = None
-
-    d1, d2 = [[2]], [[6]]
-    signals.extend([d1, d2])
     signals.sort(key=cmp_to_key(compare))
+
     return (correct_order_sum, (signals.index(d1)+1)*(signals.index(d2)+1))
 
 if __name__ == '__main__':
